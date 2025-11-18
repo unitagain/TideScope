@@ -1,0 +1,35 @@
+/* Force styles with maximum specificity */
+
+body#app,
+body {
+  background: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.15), transparent 50%),
+              radial-gradient(ellipse at bottom, rgba(168, 85, 247, 0.1), transparent 50%),
+              linear-gradient(to bottom, #f8fafc, #f1f5f9) !important;
+}
+
+.star-map-grid .star-map-panel {
+  background: radial-gradient(ellipse at 20% 30%, rgba(99, 102, 241, 0.12), transparent 50%),
+              radial-gradient(ellipse at 80% 70%, rgba(168, 85, 247, 0.08), transparent 50%),
+              linear-gradient(180deg, rgba(10, 14, 26, 0.98), rgba(15, 20, 41, 0.98)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05),
+              0 20px 40px rgba(0, 0, 0, 0.4),
+              0 0 80px rgba(99, 102, 241, 0.08) !important;
+  min-height: 1000px !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.star-map-grid .star-map-details {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.05)),
+              linear-gradient(180deg, rgba(15, 23, 42, 0.95), rgba(17, 28, 68, 0.95)) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.app-header {
+  background: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}

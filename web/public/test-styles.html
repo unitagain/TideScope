@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>样式测试页面</title>
+  <style>
+    /* Test if CSS variables are working */
+    :root {
+      --test-primary: #6366f1;
+      --test-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    }
+    
+    body {
+      margin: 0;
+      padding: 40px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), transparent 50%),
+                  linear-gradient(180deg, rgba(10, 14, 26, 0.98), rgba(15, 20, 41, 0.98));
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: white;
+    }
+    
+    .test-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: var(--test-shadow);
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .test-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(99, 102, 241, 0.5);
+    }
+    
+    h1 {
+      margin: 0 0 20px;
+      font-size: 32px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .status {
+      padding: 15px;
+      border-radius: 12px;
+      margin: 10px 0;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    
+    .planet {
+      width: 60px;
+      height: 60px;
+      margin: 20px auto;
+      background: radial-gradient(circle at 30% 30%, #8b5cf6, #6366f1 50%, #4338ca);
+      border-radius: 50%;
+      box-shadow: 
+        inset -5px -5px 15px rgba(0, 0, 0, 0.4),
+        0 10px 30px rgba(99, 102, 241, 0.6);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+  </style>
+</head>
+<body>
+  <div class="test-card">
+    <h1>🎨 样式系统测试</h1>
+    <div class="status">
+      ✅ <strong>CSS变量系统工作正常</strong><br>
+      ✅ <strong>玻璃态效果已启用</strong><br>
+      ✅ <strong>渐变背景已加载</strong><br>
+      ✅ <strong>动画系统运行中</strong>
+    </div>
+    <div class="planet"></div>
+    <p style="text-align: center; opacity: 0.8;">
+      如果你能看到这个带3D效果的紫色星球，<br>
+      并且卡片有玻璃态效果和Hover动画，<br>
+      说明你的浏览器支持所有新特性！
+    </p>
+    <p style="text-align: center; margin-top: 20px; font-size: 14px; opacity: 0.6;">
+      现在返回主页面并硬刷新（Ctrl+Shift+R）查看完整效果
+    </p>
+  </div>
+</body>
+</html>

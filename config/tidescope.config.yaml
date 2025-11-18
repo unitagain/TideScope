@@ -1,0 +1,16 @@
+repository_path: ..
+include_extensions:
+  - .py
+  - .ts
+  - .tsx
+  - .js
+  - .jsx
+  - .go
+  - .rs
+mode: deep  # or "quick" to only read GitHub remote metadata
+
+# Uncomment and set these values to enable GitHub Issue/PR fetching.
+# github:
+#   owner: your-github-user
+#   repo: your-repo-name
+#   token_env: GITHUB_TOKEN

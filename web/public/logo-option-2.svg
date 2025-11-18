@@ -1,0 +1,40 @@
+<svg width="300" height="80" viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 方案2: 科技几何风格 (类似 Kubernetes/Docker) -->
+  <defs>
+    <!-- 青蓝渐变 -->
+    <linearGradient id="textGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 图标渐变 -->
+    <linearGradient id="iconGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 几何图标 (浪潮形状) -->
+  <g transform="translate(10, 35)">
+    <!-- 波浪线 -->
+    <path d="M 0 5 Q 5 0 10 5 T 20 5" stroke="url(#iconGradient2)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M 0 12 Q 5 7 10 12 T 20 12" stroke="url(#iconGradient2)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7"/>
+    <path d="M 0 19 Q 5 14 10 19 T 20 19" stroke="url(#iconGradient2)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.4"/>
+  </g>
+  
+  <!-- TideScope 文字 -->
+  <text 
+    x="45" 
+    y="50" 
+    font-family="'JetBrains Mono', 'Fira Code', 'Consolas', monospace" 
+    font-size="38" 
+    font-weight="600" 
+    fill="url(#textGradient2)"
+    letter-spacing="-0.01em"
+  >TideScope</text>
+  
+  <!-- 装饰方块 -->
+  <rect x="285" y="42" width="6" height="6" fill="#06b6d4" opacity="0.6" rx="1"/>
+  <rect x="292" y="42" width="4" height="4" fill="#3b82f6" opacity="0.4" rx="1"/>
+</svg>

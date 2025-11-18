@@ -1,0 +1,676 @@
+/* ==================== Awwwards-Level Design System ==================== */
+
+:root {
+  /* === Primary Color System (Deep Space Theme) === */
+  --color-primary: #6366f1;
+  --color-primary-light: #818cf8;
+  --color-primary-dark: #4f46e5;
+  --color-primary-glow: rgba(99, 102, 241, 0.3);
+  
+  /* === Accent Colors (Low-Saturation Neon) === */
+  --color-accent-cyan: #22d3ee;
+  --color-accent-purple: #a855f7;
+  --color-accent-emerald: #10b981;
+  --color-accent-gold: #fbbf24;
+  
+  /* === Neutral Color Scale (7-level grayscale) === */
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  
+  /* === Dark Mode Backgrounds === */
+  --bg-dark-primary: #0a0e1a;
+  --bg-dark-secondary: #0f1419;
+  --bg-dark-elevated: #1a1f2e;
+  
+  /* === Gradients === */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-galaxy: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.15), transparent 50%),
+                      radial-gradient(ellipse at bottom, rgba(168, 85, 247, 0.1), transparent 50%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  
+  /* === Shadows === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.4), 0 0 40px rgba(99, 102, 241, 0.2);
+  
+  /* === Typography === */
+  font-family: 'Inter var', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Inter var', 'Inter', system-ui, sans-serif;
+  
+  /* === Spacing (8px grid) === */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  
+  /* === Border Radius === */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+  
+  /* === Transitions === */
+  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+  
+  /* === Z-index === */
+  --z-base: 1;
+  --z-elevated: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 1000;
+  --z-tooltip: 2000;
+  
+  /* Text rendering optimization */
+  color: var(--color-neutral-900);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv11', 'ss01';
+  font-variation-settings: 'wght' 400;
+}
+
+/* === Global Base Styles === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* === GPU硬件加速全局优化 === */
+canvas,
+[class*="echarts"],
+.star-map-panel,
+.star-map-panel canvas {
+  /* 强制GPU加速 */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+body {
+  margin: 0 !important;
+  min-height: 100vh;
+  background: var(--gradient-galaxy), 
+              linear-gradient(to bottom, var(--color-neutral-50), var(--color-neutral-100)) !important;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.app-shell {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* === Frosted Glass Header === */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0 var(--space-xl);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  transition: all var(--transition-base) var(--ease-out-quart);
+}
+
+.app-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--color-primary-glow) 50%, 
+    transparent 100%);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.app-header:hover::after {
+  opacity: 1;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all var(--transition-fast) var(--ease-out-quart);
+  opacity: 1;
+}
+
+.brand:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.brand svg {
+  display: block;
+  transition: filter var(--transition-fast);
+}
+
+.brand:hover svg {
+  filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.3));
+}
+
+/* 移除旧的 brand-icon 和 brand-title 样式 */
+
+.app-menu {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+.app-menu .ant-menu-item {
+  transition: all var(--transition-fast);
+}
+
+.app-menu .ant-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-1px);
+}
+
+.app-menu .ant-menu-item-selected {
+  background: var(--gradient-glass) !important;
+  border-bottom: 2px solid var(--color-primary) !important;
+}
+
+/* === Main Content Area === */
+.app-content {
+  padding: var(--space-xl) var(--space-xl) var(--space-3xl);
+  background: transparent;
+  position: relative;
+}
+
+.app-footer {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  padding: var(--space-lg);
+  border-top: 1px solid var(--color-neutral-200);
+}
+
+/* === Card Components with Micro-interactions === */
+.page-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-base) var(--ease-out-quart);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.page-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2xl);
+}
+
+.page-card:hover::before {
+  opacity: 1;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.page-header h2,
+.page-header h3 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--color-neutral-900), var(--color-neutral-700));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* === StarMap Grid Layout === */
+.star-map-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  animation: fadeInUp 0.6s var(--ease-out-quart);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.star-map-panel,
+.star-map-details {
+  border-radius: var(--radius-2xl);
+  padding: var(--space-xl);
+  position: relative;
+  transition: all var(--transition-base) var(--ease-out-quart);
+}
+
+/* === Galaxy-themed StarMap Panel === */
+.star-map-panel {
+  background: 
+    radial-gradient(ellipse at 20% 30%, rgba(99, 102, 241, 0.12), transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(168, 85, 247, 0.08), transparent 50%),
+    linear-gradient(180deg, rgba(10, 14, 26, 0.98), rgba(15, 20, 41, 0.98)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 80px rgba(99, 102, 241, 0.08) !important;
+  overflow: visible !important;
+  min-height: 1000px !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  
+  /* GPU硬件加速 - 关键性能优化 */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Concentric orbit rings */
+.star-map-panel::before,
+.star-map-panel::after {
+  content: '';
+  position: absolute;
+  inset: var(--space-xl);
+  border-radius: 50%;
+  border: 1px dashed rgba(148, 163, 184, 0.15);
+  pointer-events: none;
+  animation: rotate-orbit 120s linear infinite;
+}
+
+@keyframes rotate-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.star-map-panel::after {
+  inset: 80px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(99, 102, 241, 0.08);
+  animation: rotate-orbit 180s linear infinite reverse;
+}
+
+/* Floating stars background */
+.star-map-panel::before {
+  background-image: 
+    radial-gradient(1px 1px at 20% 30%, white, transparent),
+    radial-gradient(1px 1px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(1px 1px at 80% 10%, white, transparent),
+    radial-gradient(1px 1px at 90% 60%, white, transparent);
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  opacity: 0.3;
+  animation: twinkle 8s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.star-map-panel canvas {
+  filter: drop-shadow(0 20px 60px rgba(99, 102, 241, 0.3));
+  transition: filter var(--transition-slow);
+  
+  /* GPU硬件加速 - 强制Canvas在独立图层渲染 */
+  will-change: transform, filter;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.star-map-panel:hover canvas {
+  filter: drop-shadow(0 25px 80px rgba(99, 102, 241, 0.4));
+}
+
+/* === StarMap Details Panel with Glass Morphism === */
+.star-map-details {
+  background: 
+    linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.05)),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.95), rgba(17, 28, 68, 0.95));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-neutral-50);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.8s var(--ease-out-quart) 0.2s backwards;
+}
+
+.star-map-details .ant-typography,
+.star-map-details .details-label,
+.star-map-details .details-value {
+  color: var(--color-neutral-50) !important;
+}
+
+.details-section {
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all var(--transition-base);
+}
+
+.details-section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.details-section:hover {
+  border-bottom-color: rgba(99, 102, 241, 0.2);
+}
+
+.details-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-neutral-400);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+}
+
+.details-value {
+  font-size: 16px;
+  font-weight: 500;
+  color: inherit;
+  line-height: 1.6;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  align-items: flex-start;
+  margin-bottom: var(--space-lg);
+}
+
+.details-link {
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-neutral-200);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 255, 255, 0.05);
+  transition: all var(--transition-fast) var(--ease-out-quart);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.details-link:hover {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: var(--color-primary);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.details-description {
+  background: rgba(10, 14, 26, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  margin: var(--space-lg) 0;
+  transition: all var(--transition-base);
+}
+
+.details-description:hover {
+  background: rgba(10, 14, 26, 0.8);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.details-description h5 {
+  margin: 0 0 var(--space-sm);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-neutral-400);
+}
+
+.details-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.metric-card {
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all var(--transition-base) var(--ease-out-quart);
+  cursor: pointer;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.metric-card.accent {
+  background: linear-gradient(135deg, 
+    rgba(99, 102, 241, 0.9), 
+    rgba(168, 85, 247, 0.9));
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 24px rgba(99, 102, 241, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.metric-card.accent:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.5);
+}
+
+.metric-card .details-label {
+  font-size: 10px;
+  color: rgba(248, 250, 252, 0.7);
+  margin-bottom: var(--space-xs);
+}
+
+.metric-card .details-value {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.details-skills .ant-tag {
+  border: none;
+  background: rgba(99, 102, 241, 0.15);
+  backdrop-filter: blur(4px);
+  color: var(--color-neutral-100);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xs) var(--space-md);
+  font-size: 12px;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.details-skills .ant-tag:hover {
+  background: rgba(99, 102, 241, 0.3);
+  transform: translateY(-1px);
+}
+
+.details-assignees .ant-tag,
+.details-assignees .ant-typography {
+  color: var(--color-neutral-200) !important;
+}
+
+.details-assignees .ant-tag {
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  transition: all var(--transition-fast);
+}
+
+.details-assignees .ant-tag:hover {
+  background: rgba(168, 85, 247, 0.3);
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+.filters-row {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-lg);
+}
+
+.star-map-details {
+  width: 100%;
+}
+
+/* === Responsive Design === */
+@media (max-width: 900px) {
+  .star-map-panel {
+    min-height: 600px;
+    padding: var(--space-lg);
+  }
+  
+  .app-content {
+    padding: var(--space-lg);
+  }
+  
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .details-metric-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .star-map-panel {
+    min-height: 480px;
+  }
+  
+  .details-metric-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === Loading State with Skeleton === */
+.ant-spin-container {
+  transition: opacity var(--transition-base);
+}
+
+.ant-spin-blur {
+  opacity: 0.5;
+  filter: blur(2px);
+}
+
+/* === Smooth Scrollbar === */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: var(--radius-full);
+  transition: background var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
+
+/* === Selection Styling === */
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background: rgba(99, 102, 241, 0.3);
+  color: white;
+}

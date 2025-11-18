@@ -1,0 +1,38 @@
+<svg width="300" height="80" viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 方案1: 现代渐变风格 (类似 Vercel/Next.js) -->
+  <defs>
+    <!-- 主渐变：蓝紫色 -->
+    <linearGradient id="textGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 发光效果 -->
+    <filter id="glow1">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- TideScope 文字 -->
+  <text 
+    x="150" 
+    y="50" 
+    font-family="'Inter', 'SF Pro Display', -apple-system, system-ui, sans-serif" 
+    font-size="42" 
+    font-weight="700" 
+    text-anchor="middle"
+    fill="url(#textGradient1)"
+    filter="url(#glow1)"
+    letter-spacing="-0.02em"
+  >TideScope</text>
+  
+  <!-- 装饰点 -->
+  <circle cx="290" cy="45" r="3" fill="#3b82f6" opacity="0.8">
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>

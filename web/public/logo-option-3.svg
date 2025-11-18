@@ -1,0 +1,65 @@
+<svg width="300" height="80" viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 方案3: 优雅简约风格 (类似 GitHub/Tailwind) -->
+  <defs>
+    <!-- 紫色调渐变 -->
+    <linearGradient id="textGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a78bfa;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#c084fc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e879f9;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 柔和发光 -->
+    <filter id="softGlow3">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- TideScope 文字 - 分段着色 -->
+  <g filter="url(#softGlow3)">
+    <text 
+      x="150" 
+      y="48" 
+      font-family="'SF Pro Display', 'Inter', -apple-system, system-ui, sans-serif" 
+      font-size="40" 
+      font-weight="600" 
+      text-anchor="middle"
+      letter-spacing="-0.03em"
+    >
+      <tspan fill="#a78bfa">Tide</tspan><tspan fill="#e879f9">Scope</tspan>
+    </text>
+  </g>
+  
+  <!-- 下划线装饰 -->
+  <line x1="100" y1="58" x2="200" y2="58" stroke="url(#textGradient3)" stroke-width="2" opacity="0.4" stroke-linecap="round"/>
+  
+  <!-- 装饰星星 -->
+  <g transform="translate(88, 25)">
+    <path d="M 0,-3 L 0.5,-0.5 L 3,0 L 0.5,0.5 L 0,3 L -0.5,0.5 L -3,0 L -0.5,-0.5 Z" fill="#a78bfa" opacity="0.6">
+      <animateTransform
+        attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        from="0"
+        to="360"
+        dur="8s"
+        repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <g transform="translate(212, 28)">
+    <path d="M 0,-2.5 L 0.4,-0.4 L 2.5,0 L 0.4,0.4 L 0,2.5 L -0.4,0.4 L -2.5,0 L -0.4,-0.4 Z" fill="#e879f9" opacity="0.5">
+      <animateTransform
+        attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        from="360"
+        to="0"
+        dur="10s"
+        repeatCount="indefinite"/>
+    </path>
+  </g>
+</svg>

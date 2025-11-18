@@ -1,0 +1,6 @@
+repository_path: https://github.com/MODSetter/SurfSense   # 快速模式下不会读取，但需指向合法路径
+mode: quick
+github:
+  owner: MODSetter
+  repo: SurfSense
+  token_env: GITHUB_TOKEN   # 请设置环境变量 GITHUB_TOKEN

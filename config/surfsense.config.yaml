@@ -1,0 +1,5 @@
+﻿repository_path: .
+github:
+  owner: MODSetter
+  repo: SurfSense
+  token_env: GITHUB_TOKEN
