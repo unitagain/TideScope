@@ -55,6 +55,8 @@ Through this **innovative visualization approach**, we aim to help:
 
 ### StarMap View
 *Example using [SurfSense](https://github.com/MODSetter/SurfSense) project*
+<img width="1332" height="1164" alt="QQ_1763474452961" src="https://github.com/user-attachments/assets/1e99fb0f-2c35-41d6-b1c9-c9d70fbfc4f2" />
+<img width="2468" height="491" alt="QQ_1763474479378" src="https://github.com/user-attachments/assets/4813e1d8-8c2b-4640-b2a6-39c8ba5595ec" />
 
 **StarMap Features:**
 - 🎯 Important tasks in the center circle, priority decreases outward
