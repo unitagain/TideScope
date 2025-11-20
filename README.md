@@ -1,3 +1,6 @@
+![IMG_20251120_191504](https://github.com/user-attachments/assets/10241819-cc96-4b41-b080-419ead551b31)
+
+
 <div align="center">
   <img src="web/public/logo-option-1.svg" alt="TideScope Logo" width="400"/>
   
