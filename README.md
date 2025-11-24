@@ -430,14 +430,6 @@ TideScope-main/
 └── docs/                  # Documentation
 ```
 
----
-
-## � License
-
-[To be added - Suggest MIT or Apache 2.0]
-
----
-
 ## 🙏 Acknowledgments
 
 - Thanks to all developers who contributed to TideScope
