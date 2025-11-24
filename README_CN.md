@@ -425,14 +425,6 @@ TideScope-main/
 │   ├── tidescope.config.yaml
 │   └── surfsense.config.yaml
 └── docs/                  # 文档
-```
-
----
-
-## 📄 开源协议
-
-[待添加 - 建议使用 MIT 或 Apache 2.0]
-
 ---
 
 ## 🙏 致谢
