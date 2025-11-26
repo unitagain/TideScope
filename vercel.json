@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/main.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/main.py"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/badge/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=86400"
+        }
+      ]
+    }
+  ],
+  "env": {
+    "GITHUB_TOKEN": "@github_token",
+    "OPENAI_API_KEY": "@openai_api_key",
+    "DEEPSEEK_API_KEY": "@deepseek_api_key",
+    "LLM_PROVIDER": "deepseek",
+    "BADGE_BASE_URL": "https://tidescope.vercel.app"
+  }
+}

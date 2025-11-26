@@ -81,140 +81,360 @@ Through this **innovative visualization approach**, we aim to help:
 
 ---
 
+## 🎨 Dual System Architecture
+
+TideScope provides **two core systems** to meet different needs:
+
+### 1️⃣ Badge System - Best Entry Point for New Contributors
+
+**Core Value:** Lower the barrier to open source contribution, help beginners quickly find suitable tasks
+
+#### 🎯 System Features
+
+- **📊 Project Health Dashboard**
+  - Real-time health score (0-100)
+  - Project activity trend analysis
+  - Open Issues and PR statistics
+
+- **🎖️ AI-Powered Task Badges**
+  - Auto-generate beautiful SVG badges
+  - Display task title, difficulty, required skills
+  - One-click jump to GitHub Issue
+
+- **🌱 Beginner-Friendly Task List**
+  - Filter Issues suitable for beginners
+  - Categorized by difficulty and skills
+  - Includes detailed implementation suggestions
+
+- **📝 Auto-Generate CONTRIBUTING.md**
+  - AI analyzes project to generate contribution guide
+  - Includes health metrics, recommended tasks, skill distribution
+  - Beautiful Markdown format, GitHub-ready
+
+#### 🔧 Technical Implementation
+
+**Workflow:**
+```
+GitHub API → Data Fetch → LLM/Rule Analysis → SVG Generation → Markdown Rendering
+```
+
+**Core Components:**
+1. **`analyzer/smart_analyzer.py`** - Smart Analyzer
+   - Automatically choose LLM or rule-based analysis
+   - Extract required skills from Issues
+   - Assess task difficulty and priority
+
+2. **`utils/hero_badge_generator.py`** - Hero Badge Generator
+   - Generate project health panel
+   - Create recommended task badges
+   - Support multiple themes and sizes
+
+3. **`scripts/generate_contributing.py`** - Documentation Generator
+   - Auto-generate CONTRIBUTING.md
+   - Integrate health, tasks, and skill information
+   - Support custom templates
+
+**Output Files:**
+```
+badges/
+├── CONTRIBUTING.md          # AI-generated contribution guide
+├── README.md                # Project README snippet
+├── PREVIEW.html             # Local preview page
+└── assets/
+    ├── hero_badge.svg       # Project hero badge
+    ├── health_panel.svg     # Health panel
+    ├── recommended_task.svg # Recommended task badge
+    └── beginner_task_*.svg  # Beginner task badges
+```
+
+#### 💡 Use Cases
+
+- ✅ **Open Source Maintainers**: One-click professional contribution guide
+- ✅ **New Contributors**: Quickly understand project health and recommended tasks
+- ✅ **Team Collaboration**: Unified task priority and skill requirements
+
+---
+
+### 2️⃣ Star Map System - Universe View of Technical Debt
+
+**Core Value:** Visualize technical debt as a starry sky, making management intuitive and engaging
+
+#### 🌌 System Features
+
+- **Polar Coordinate Layout**
+  - Based on Golden Angle Spiral (137.5°)
+  - Important tasks in center, priority decreases outward
+  - Node size reflects impact scope
+
+- **Constellation-Style Clustering**
+  - PRs and Issues connected by golden lines forming "constellations"
+  - Auto-identify relationships between related tasks
+  - Visualize project module division
+
+- **Interactive Exploration**
+  - Hover to view task details (title, skills, difficulty, recommendations)
+  - Click to jump to GitHub
+  - Support zoom and pan
+
+- **Multi-Dimensional Analysis**
+  - Color-coded by difficulty (green-orange-red)
+  - Categorized by status (Open/Closed/Merged)
+  - Skill tag visualization
+
+#### 🔧 Technical Implementation
+
+**Workflow:**
+```
+GitHub API → Scan Issues/PRs → LLM Analysis → Coordinate Calculation → ECharts Rendering
+```
+
+**Core Components:**
+1. **`scanner/github/client.py`** - GitHub Data Fetcher
+   - Batch fetch Issues and PRs
+   - Handle pagination and rate limits
+   - Caching mechanism to reduce API calls
+
+2. **`analyzer/builder.py`** - Analysis Engine
+   - Multi-dimensional scoring (priority, difficulty, impact)
+   - LLM skill extraction and recommendation generation
+   - Relationship identification
+
+3. **`analyzer/star_map.py`** - StarMap Coordinate Algorithm
+   - Golden angle spiral layout
+   - Square root radius mapping
+   - Force-directed anti-overlap optimization
+
+4. **`web/src/pages/StarMapPage.tsx`** - Frontend Visualization
+   - ECharts polar coordinate chart
+   - Interactive nodes and connections
+   - Responsive design
+
+**Output Files:**
+```
+reports/
+├── tidescope-raw.json       # Raw scan data
+└── tidescope-report.json    # Analysis report (with coordinates)
+```
+
+#### 💡 Use Cases
+
+- ✅ **Project Maintainers**: Global view of technical debt management
+- ✅ **Team Leads**: Identify critical paths and bottlenecks
+- ✅ **Product Managers**: Understand dev resource allocation
+- ✅ **Developers**: Find interesting modules and tasks
+
+---
+
 ## 🛠️ Tech Stack
 
-### Backend
-- **Python 3.8+** - Core programming language
-- **FastAPI** - High-performance REST API framework
-- **Typer** - Elegant CLI tool builder
-- **OpenAI / Deepseek API** - LLM intelligent analysis (supports multiple models)
-- **PyGithub** - GitHub API interaction
+### 🐍 Backend Technologies
 
-### Frontend
-- **React 18** - Modern UI framework
-- **TypeScript** - Type-safe development experience
-- **Apache ECharts** - Powerful visualization library (polar coordinate charts)
-- **Ant Design** - Enterprise-level UI components
-- **Vite** - Fast build tool
+| Technology | Version | Purpose |
+|------------|---------|----------|
+| **Python** | 3.8+ | Core programming language |
+| **Pydantic** | 2.x | Data validation and modeling |
+| **HTTPX** | Latest | Async HTTP client (GitHub API) |
+| **PyYAML** | Latest | Configuration file parsing |
+| **python-dotenv** | Latest | Environment variable management |
+| **FastAPI** | Latest | REST API framework (Optional, for Web UI) |
+| **Typer** | Latest | Advanced CLI tool (Optional) |
 
-### Core Algorithms
-- **Golden Angle Spiral Layout** (137.5°) - Nature's optimal distribution algorithm
-- **Square Root Radius Mapping** - Solves sparse outer ring and crowded inner ring issues
-- **Force-Directed Anti-Overlap** - Real-time collision detection and repulsion
-- **Anti-Collinearity Force** - Prevents nodes from being too regularly arranged
+### 🎨 Frontend Technologies (Web UI)
+
+| Technology | Version | Purpose |
+|------------|---------|----------|
+| **React** | 18 | Modern UI framework |
+| **TypeScript** | Latest | Type-safe development |
+| **Apache ECharts** | 5.x | Data visualization (polar charts) |
+| **Ant Design** | 5.x | UI component library |
+| **Vite** | 5.x | Fast build tool |
+
+### 🤖 LLM Integration
+
+| Provider | Model | Notes |
+|----------|-------|-------|
+| **Deepseek** | deepseek-chat | Recommended: Cost-effective, relaxed rate limits |
+| **OpenAI** | gpt-4o-mini | Alternative: Powerful, higher cost |
+
+**LLM Analysis Content:**
+- Extract required skills (e.g., React, TypeScript, Docker)
+- Assess difficulty (1-5 scale)
+- Generate implementation recommendations
+
+**Fallback Strategy:**
+- Automatically uses rule-based analysis when no API key
+- System works in any configuration
+
+### 🧠 Core Algorithms
+
+#### StarMap Layout Algorithm
+```python
+# Golden Angle Spiral Layout
+GOLDEN_ANGLE = 137.5  # degrees
+angle = i * GOLDEN_ANGLE
+radius = sqrt(i / total_count) * max_radius
+
+# Polar to Cartesian conversion
+x = radius * cos(angle)
+y = radius * sin(angle)
+```
+
+**Features:**
+- 📐 **Golden Angle Spiral** (137.5°) - Nature's optimal distribution
+- 📏 **Square Root Radius** - Solves sparse outer ring problem
+- 🔄 **Force-Directed Optimization** - Prevents node overlap
+- 🌟 **Constellation Linking** - PR-Issue auto-connection
+
+#### Smart Scoring System
+```python
+# Multi-dimensional scoring
+priority_score = (
+    label_weight * 0.4 +      # Label importance
+    activity_score * 0.3 +     # Activity level
+    age_factor * 0.2 +         # Creation time
+    relation_count * 0.1       # Relationship count
+)
+```
+
+**Scoring Dimensions:**
+- 🏷️ Label weight (bug > feature > enhancement)
+- 📈 Activity (recent updates, comments)
+- ⏰ Age factor (freshness decay)
+- 🔗 Relationships (PR count, references)
 
 ---
 
 ## 🚀 Quick Start
 
 ### Requirements
-- Python 3.8 or higher
-- Node.js 16 or higher
-- GitHub Personal Access Token (for repository scanning)
+- **Python 3.8+**
+- **GitHub Personal Access Token** (for fetching repository data)
+- **LLM API Key** (Optional, for AI-powered analysis)
 
-### 1. Clone the Project
+### 📦 Installation
+
+#### 1. Clone the Project
 ```bash
 git clone https://github.com/unitagain/TideScope.git
 cd TideScope/TideScope-main
 ```
 
-### 2. Install Backend Dependencies
+#### 2. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Install Frontend Dependencies
-```bash
-cd web
-npm install
-cd ..
-```
+#### 3. Configure Environment Variables
 
-### 4. Configure Environment Variables
-
-#### GitHub Token
-Get Token: Visit [GitHub Settings → Developer settings → Personal access tokens](https://github.com/settings/tokens)
+Create a `.env` file or set environment variables:
 
 ```bash
-# Windows PowerShell
-$env:GITHUB_TOKEN="ghp_your_github_token_here"
+# Required: GitHub Token
+GITHUB_TOKEN=ghp_your_github_token_here
 
-# Linux / macOS
-export GITHUB_TOKEN="ghp_your_github_token_here"
+# Optional: LLM API (for AI analysis)
+DEEPSEEK_API_KEY=sk-your-deepseek-key
+# Or
+OPENAI_API_KEY=sk-your-openai-key
 ```
 
-#### LLM API Configuration (Optional but Recommended)
-If you need intelligent analysis features:
+**Get GitHub Token:**
+Visit [GitHub Settings → Developer settings → Personal access tokens](https://github.com/settings/tokens)
 
-```bash
-# Use Deepseek (Recommended, cost-effective)
-$env:OPENAI_API_KEY="sk-your-deepseek-key"
-$env:OPENAI_BASE_URL="https://api.deepseek.com/v1"
+**About LLM API:**
+- 🟢 **Recommended: Deepseek** - Cost-effective, fully compatible with OpenAI API
+- 🔵 **OpenAI** - Powerful features, higher cost
+- ⚪ **Skip LLM** - Still works with rule-based analysis
 
-# Or use OpenAI
-$env:OPENAI_API_KEY="sk-your-openai-key"
-$env:OPENAI_BASE_URL="https://api.openai.com/v1"
-```
+#### 4. Edit Configuration File
 
-⚠️ **Important Note: About LLM API**
-- **Free OpenAI API Limitations**: Free tier usually has strict rate limits (3 requests per minute), which can cause incomplete analysis when scanning large projects
-- **Recommended: Use Deepseek**: API format fully compatible with OpenAI, very affordable pricing (about 1/10 of OpenAI), more relaxed rate limits
-- **Or Upgrade to OpenAI Paid**: Get higher rate limits and better experience
-- **Can Also Skip LLM**: Skip intelligent analysis step, still can generate rule-based StarMap
-
-### 5. Configure Scan Target
-
-Edit `config/tidescope.config.yaml`:
+Edit `config.yaml` to set the repository to analyze:
 
 ```yaml
-repository_path: ..  # Local code path
-include_extensions:
-  - .py
-  - .ts
-  - .tsx
-  - .js
-  - .jsx
-mode: deep  # deep: scan code; quick: GitHub only
+repository:
+  owner: "MODSetter"      # GitHub username or organization
+  name: "SurfSense"       # Repository name
 
-github:
-  owner: OWNER_NAME     # Repository owner
-  repo: REPO_NAME       # Repository name
-  token_env: GITHUB_TOKEN
+analysis:
+  use_llm: false          # Whether to use LLM (requires API Key)
+  max_issues: 100         # Maximum issues to analyze
 ```
 
-### 6. Run Scan
+### 🎯 Using Interactive CLI
+
+TideScope provides an **interactive CLI interface** for easy usage:
 
 ```bash
-# Scan and generate raw data
-python -m cli.main scan --config config/tidescope.config.yaml
-
-# Generates tidescope-raw.json
+python tidescope.py
 ```
 
-### 7. Analyze Data (Using LLM)
+You'll see:
 
-```bash
-# Use LLM for intelligent analysis
-python -m cli.main analyze \
-  --scan-result tidescope-raw.json \
-  --output tidescope-report.json \
-  --use-llm
+```
+████████╗██╗██████╗ ███████╗███████╗ ██████╗ ██████╗ ██████╗ ███████╗
+╚══██╔══╝██║██╔══██╗██╔════╝██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝
+   ██║   ██║██║  ██║█████╗  ███████╗██║     ██║   ██║██████╔╝█████╗  
+   ██║   ██║██║  ██║██╔══╝  ╚════██║██║     ██║   ██║██╔═══╝ ██╔══╝  
+   ██║   ██║██████╔╝███████╗███████║╚██████╗╚██████╔╝██║     ███████╗
+   ╚═╝   ╚═╝╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚══════╝
 
-# Generates tidescope-report.json
+        🌊 AI-Powered Technical Debt Analyzer v2.0 🌊
+
+📋 What would you like to generate?
+
+  1️⃣  Star Map (Technical Debt Visualization)
+  2️⃣  Badge System (AI-Powered Contributor Guide)
+  3️⃣  Both (Complete Analysis)
+  0️⃣  Exit
+
+👉 Select an option (0-3):
 ```
 
-### 8. Launch Web UI
+#### Option Description
+
+**1️⃣ Star Map**
+- Generates technical debt visualization JSON report
+- Output: `reports/tidescope-raw.json` and `tidescope-report.json`
+- Purpose: Analyze technical debt distribution
+
+**2️⃣ Badge System**
+- Generates AI-powered contributor guide
+- Output: `badges/CONTRIBUTING.md` and SVG badge files
+- Purpose: Help new contributors get started quickly
+
+**3️⃣ Both**
+- Run both Star Map and Badge System
+- Complete project analysis
+
+### 🌐 Using Web UI to View StarMap
+
+**Prerequisites:**
+- Node.js 16+ installed
+- StarMap report generated (Option 1 or 3)
+
+**Steps:**
 
 ```bash
-# Terminal 1: Start backend API
+# 1. Install frontend dependencies (first time only)
+cd web
+npm install
+
+# 2. Start backend API (new terminal)
+cd ..
 python -m api.main
 
-# Terminal 2: Start frontend
+# 3. Start frontend dev server (new terminal)
 cd web
 npm run dev
 ```
 
-Visit `http://localhost:5173` to see the StarMap! 🌟
+**Visit:** `http://localhost:5173`
+
+You'll see:
+- 🌌 **StarMap Visualization**: Polar coordinate distribution of technical debt
+- 🎯 **Task Details**: Click nodes for detailed information
+- 🔗 **Relationship Analysis**: Lines connecting PRs and Issues
+- 📊 **Statistics Panel**: Project health and trends
 
 ---
 
@@ -399,36 +619,73 @@ You're welcome to join us!
 
 ```
 TideScope-main/
-├── analyzer/              # Analysis engine
-│   ├── builder.py         # Build analysis reports
-│   ├── llm_client.py      # LLM API client
-│   ├── models.py          # Data models
-│   ├── rules.py           # Scoring rules
-│   └── star_map.py        # StarMap coordinate calculation
-├── scanner/               # Scanners
-│   ├── github/            # GitHub API client
+├── tidescope.py           # 🎯 Interactive CLI main entry
+├── generate_badges.py     # 🎨 Badge generation CLI tool
+├── config.yaml            # ⚙️ Project configuration file
+│
+├── analyzer/              # 🧠 Analysis Engine
+│   ├── smart_analyzer.py  # Smart analyzer (LLM/Rule switching)
+│   ├── builder.py         # Report builder
+│   ├── llm_client.py      # LLM API client (Deepseek/OpenAI support)
+│   ├── models.py          # Data models (DebtItem, AnalysisReport)
+│   ├── rules.py           # Rule-based scoring engine
+│   └── star_map.py        # StarMap coordinate calculation (Golden Angle Spiral)
+│
+├── scanner/               # 🔍 Data Scanner
+│   ├── github/
+│   │   ├── client.py      # GitHub API client
+│   │   └── __init__.py    # Data fetch interface
 │   ├── code/              # Code TODO scanner
+│   │   └── todo_scanner.py
 │   ├── models.py          # Scan data models
-│   └── runner.py          # Scan orchestration
-├── api/                   # REST API
-│   └── main.py            # FastAPI application
-├── cli/                   # Command-line tool
-│   └── main.py            # Typer CLI
-├── web/                   # Frontend application
+│   ├── runner.py          # Scan orchestration
+│   └── config_loader.py   # Configuration loader
+│
+├── utils/                 # 🛠️ Utilities
+│   ├── github_helper.py   # GitHub data fetching
+│   ├── hero_badge_generator.py     # Hero badge generation
+│   ├── analysis_panel_generator.py # Analysis panel generation
+│   ├── svg_badge_generator.py      # SVG badge utilities
+│   ├── task_badge_generator.py     # Task badge generation
+│   └── cache_manager.py   # Cache management
+│
+├── scripts/               # 📝 Script Tools
+│   └── generate_contributing.py # CONTRIBUTING.md generator
+│
+├── api/                   # 🌐 REST API
+│   └── main.py            # FastAPI application (for Web UI)
+│
+├── cli/                   # 💻 Traditional CLI Tool
+│   └── main.py            # Typer CLI (advanced usage)
+│
+├── web/                   # 🎨 Frontend Application
 │   ├── src/
 │   │   ├── components/    # React components
 │   │   │   ├── Logo.tsx   # Logo component
 │   │   │   └── AppLayout.tsx
-│   │   └── pages/
-│   │       └── StarMapPage.tsx  # StarMap page
+│   │   ├── pages/
+│   │   │   └── StarMapPage.tsx  # StarMap visualization page
+│   │   └── main.tsx       # Entry file
 │   └── public/            # Static assets
 │       ├── logo-option-1.svg
 │       └── favicon.svg
-├── config/                # Configuration templates
-│   ├── tidescope.config.yaml
-│   └── surfsense.config.yaml
-└── docs/                  # Documentation
+│
+└── config/                # 📋 Configuration Templates (legacy)
+    └── tidescope.config.yaml
 ```
+
+### 🔑 Key Files
+
+| File | Purpose | Key Features |
+|------|---------|--------------|
+| `tidescope.py` | CLI main entry | Interactive menu, generate StarMap/Badges |
+| `generate_badges.py` | Badge generation tool | Direct CLI badge generation |
+| `config.yaml` | Configuration file | Repository info, analysis settings, LLM config |
+| `analyzer/smart_analyzer.py` | Smart analysis | Auto-select LLM or rule-based analysis |
+| `analyzer/builder.py` | Report building | Integrate scan data, generate analysis report |
+| `scanner/github/client.py` | GitHub fetching | Get Issues/PRs, handle rate limits |
+| `utils/hero_badge_generator.py` | Badge generation | Generate health, recommended task SVGs |
+| `scripts/generate_contributing.py` | Doc generation | Auto-generate CONTRIBUTING.md |
 
 ---
 

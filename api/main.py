@@ -8,8 +8,17 @@ from typing import Dict
 from fastapi import FastAPI, HTTPException
 
 from analyzer import AnalysisReport
+from api.routes import badge, badge_v2
 
-app = FastAPI(title="TideScope API", version="0.1.0")
+app = FastAPI(
+    title="TideScope API",
+    version="2.0.0",
+    description="Technical Debt Analysis and Smart Badge System"
+)
+
+# Register badge routes
+app.include_router(badge.router)  # v1 badges (legacy)
+app.include_router(badge_v2.router)  # v2 badges (new Hero Badge system)
 
 _REPORT_CACHE: Dict[Path, AnalysisReport] = {}
 

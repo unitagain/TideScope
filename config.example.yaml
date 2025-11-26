@@ -1,0 +1,76 @@
+# TideScope Configuration File Example
+# Copy this to config.yaml and edit for your repository
+
+# Repository Information
+repository:
+  owner: "YOUR_GITHUB_USERNAME"    # GitHub username or organization
+  name: "YOUR_REPO_NAME"           # Repository name
+  
+# Output Settings
+output:
+  # Directory for generated files
+  report_dir: "reports"
+  badge_dir: "badges"
+  
+  # File names
+  starmap_file: "tidescope-report.json"
+  readme_file: "README.md"
+  contributing_file: "CONTRIBUTING.md"
+
+# Analysis Settings
+analysis:
+  # Use LLM for analysis (requires API key)
+  use_llm: false
+  
+  # Maximum issues to analyze
+  max_issues: 100
+  
+  # Language for badges
+  badge_language: "en"  # en, zh, ja, es
+  
+  # Theme for badges
+  badge_theme: "light"  # light, dark
+
+# GitHub API Settings
+github:
+  # Token will be read from environment variable GITHUB_TOKEN
+  # Set it in .env file or system environment
+  
+  # API rate limit handling
+  max_retries: 3
+  retry_delay: 5
+
+# LLM Settings (Optional)
+llm:
+  # Provider: deepseek or openai
+  provider: "deepseek"
+  
+  # API keys will be read from environment variables:
+  # DEEPSEEK_API_KEY or OPENAI_API_KEY
+  
+  # Cost control
+  daily_budget: 1.0  # Maximum daily cost in CNY
+
+# Badge Generation Settings
+badge:
+  # CDN cache duration (seconds)
+  cache_ttl: 86400  # 24 hours
+  
+  # Target user level for recommendations
+  target_level: "all"  # beginners, all, experts
+  
+  # Badge size
+  hero_badge_size: "550x180"
+  
+  # Include analysis panels
+  generate_health_panel: true
+  generate_trends_panel: true
+  generate_skills_panel: true
+
+# Advanced Settings
+advanced:
+  # Enable debug logging
+  debug: false
+  
+  # Parallel processing
+  max_workers: 4

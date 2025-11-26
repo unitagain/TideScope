@@ -86,3 +86,15 @@ surfsense-report.json
 # Keep example configs but ignore local configs
 # config/*.local.yaml
 # config/*.secret.yaml
+config.yaml
+post_CN.txt
+
+# Generated output directories
+reports/
+badges/
+badges_*/
+
+# Node modules (frontend)
+web/node_modules/
+web/dist/
+web/.next/

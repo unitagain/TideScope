@@ -40,7 +40,7 @@ class GitHubFetcher:
         return headers
 
     def _client(self) -> httpx.Client:
-        return httpx.Client(headers=self._headers(), timeout=self.timeout)
+        return httpx.Client(headers=self._headers(), timeout=self.timeout, follow_redirects=True)
 
     def fetch_issues(self) -> List[IssueRaw]:
         url = f"{self.base_url}/repos/{self.config.owner}/{self.config.repo}/issues"
@@ -49,34 +49,40 @@ class GitHubFetcher:
         with self._client() as client:
             page = 1
             while True:
-                response = client.get(
-                    url,
-                    params={"state": "all", "per_page": 100, "page": page},
-                )
-                response.raise_for_status()
-                payload = response.json()
-                if not payload:
-                    break
-
-                for item in payload:
-                    if "pull_request" in item:
-                        continue
-                    collected.append(
-                        IssueRaw(
-                            id=item["id"],
-                            number=item["number"],
-                            title=item["title"],
-                            state=item["state"],
-                            labels=[label["name"] for label in item.get("labels", [])],
-                            assignees=[assignee["login"] for assignee in item.get("assignees", [])],
-                            created_at=_parse_dt(item["created_at"]),
-                            updated_at=_parse_dt(item.get("updated_at")),
-                            html_url=item["html_url"],
-                            body=item.get("body"),
-                        )
+                try:
+                    response = client.get(
+                        url,
+                        params={"state": "all", "per_page": 100, "page": page},
                     )
+                    response.raise_for_status()
+                    payload = response.json()
+                    if not payload:
+                        break
 
-                page += 1
+                    for item in payload:
+                        if "pull_request" in item:
+                            continue
+                        collected.append(
+                            IssueRaw(
+                                id=item["id"],
+                                number=item["number"],
+                                title=item["title"],
+                                state=item["state"],
+                                labels=[label["name"] for label in item.get("labels", [])],
+                                assignees=[assignee["login"] for assignee in item.get("assignees", [])],
+                                created_at=_parse_dt(item["created_at"]),
+                                updated_at=_parse_dt(item.get("updated_at")),
+                                html_url=item["html_url"],
+                                body=item.get("body"),
+                            )
+                        )
+
+                    page += 1
+                except httpx.HTTPStatusError as e:
+                    # GitHub API returns 422 when page exceeds limit (>1000 items)
+                    if e.response.status_code == 422:
+                        break
+                    raise
 
         return collected
 
@@ -87,32 +93,38 @@ class GitHubFetcher:
         with self._client() as client:
             page = 1
             while True:
-                response = client.get(
-                    url,
-                    params={"state": "all", "per_page": 100, "page": page},
-                )
-                response.raise_for_status()
-                payload = response.json()
-                if not payload:
-                    break
-
-                for item in payload:
-                    collected.append(
-                        PullRequestRaw(
-                            id=item["id"],
-                            number=item["number"],
-                            title=item["title"],
-                            state=item["state"],
-                            draft=item.get("draft", False),
-                            created_at=_parse_dt(item["created_at"]),
-                            updated_at=_parse_dt(item.get("updated_at")),
-                            merged_at=_parse_dt(item.get("merged_at")),
-                            html_url=item["html_url"],
-                            body=item.get("body"),
-                        )
+                try:
+                    response = client.get(
+                        url,
+                        params={"state": "all", "per_page": 100, "page": page},
                     )
+                    response.raise_for_status()
+                    payload = response.json()
+                    if not payload:
+                        break
 
-                page += 1
+                    for item in payload:
+                        collected.append(
+                            PullRequestRaw(
+                                id=item["id"],
+                                number=item["number"],
+                                title=item["title"],
+                                state=item["state"],
+                                draft=item.get("draft", False),
+                                created_at=_parse_dt(item["created_at"]),
+                                updated_at=_parse_dt(item.get("updated_at")),
+                                merged_at=_parse_dt(item.get("merged_at")),
+                                html_url=item["html_url"],
+                                body=item.get("body"),
+                            )
+                        )
+
+                    page += 1
+                except httpx.HTTPStatusError as e:
+                    # GitHub API returns 422 when page exceeds limit
+                    if e.response.status_code == 422:
+                        break
+                    raise
 
         return collected
     
